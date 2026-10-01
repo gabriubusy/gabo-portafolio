@@ -1,51 +1,70 @@
-<section id="inicio" class="relative overflow-hidden bg-navy-900">
-    <div class="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-accent-500/15 blur-3xl"></div>
+<section id="inicio" class="relative">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+        <div class="orb -left-24 top-10 h-80 w-80 bg-accent" style="--x: 80px; --y: 50px; --t: 24s"></div>
+        <div class="orb right-0 top-1/3 h-96 w-96 bg-wildoow" style="--x: -70px; --y: -60px; --t: 28s"></div>
+    </div>
 
-    <div class="relative mx-auto max-w-5xl px-6 py-20 md:py-24">
-        <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-accent-400/40 bg-accent-400/10 px-3 py-1 text-xs font-medium text-accent-300">
-            <span class="h-1.5 w-1.5 rounded-full bg-accent-400"></span>
-            {{ $perfil['ubicacion'] }}
-        </p>
+    <div class="relative mx-auto max-w-6xl px-5 pb-24 pt-14 sm:px-10 md:pt-20 lg:pb-28">
+    <div class="grid items-center gap-16 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,1fr)]">
+        <div class="flex flex-col gap-7">
+            <div class="rise flex flex-wrap gap-2.5" style="--d: 0ms">
+                <span class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] font-medium text-green">
+                    <span class="live-dot h-2 w-2 rounded-full bg-current"></span>
+                    Disponible para proyectos en remoto
+                </span>
+                <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-[13px] text-muted">
+                    <x-icon name="map-pin" :size="14" />
+                    {{ $perfil['ubicacion'] }}
+                </span>
+            </div>
 
-        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-            {{ $perfil['nombre'] }}
-        </h1>
+            <h1 class="rise font-display text-[2.6rem] font-extrabold leading-[0.98] tracking-[-0.04em] text-ink sm:text-6xl lg:text-[4.5rem]" style="--d: 80ms">
+                Construyo productos web completos y los llevo a <span class="text-accent">producción.</span>
+            </h1>
 
-        <p class="mt-4 text-lg text-slate-200">{{ $perfil['titulo'] }}</p>
-        <p class="mt-1 text-sm font-semibold text-accent-400">{{ $perfil['stack'] }}</p>
+            <p class="rise max-w-[540px] text-lg leading-relaxed text-muted" style="--d: 160ms">
+                Soy <strong class="font-semibold text-ink">{{ $perfil['nombre'] }}</strong>, ingeniero en sistemas y desarrollador web full stack.
+                {{ $perfil['resumen'] }}
+            </p>
 
-        <div class="mt-8 max-w-3xl space-y-4 text-base leading-relaxed text-slate-300">
-            @foreach ($perfil['resumen'] as $parrafo)
-                <p>{{ $parrafo }}</p>
-            @endforeach
+            <div class="rise flex flex-wrap gap-3" style="--d: 240ms">
+                <a href="#proyectos" class="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3.5 text-[15px] font-semibold text-surface transition hover:opacity-90">
+                    Ver proyectos
+                    <x-icon name="arrow-down" :size="17" />
+                </a>
+                <a href="mailto:{{ $perfil['email'] }}" class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-3.5 text-[15px] font-semibold text-ink transition hover:border-ink/30">
+                    <x-icon name="mail" :size="17" />
+                    Escríbeme
+                </a>
+            </div>
+
+            <div class="rise flex flex-col gap-3 pt-2" style="--d: 320ms">
+                <p class="font-mono text-xs uppercase tracking-[0.12em] text-muted">Stack principal</p>
+                <div class="flex flex-wrap gap-2">
+                    @foreach ($perfil['stack'] as [$label, $logo])
+                        <x-tech :label="$label" :logo="$logo" />
+                    @endforeach
+                </div>
+            </div>
         </div>
 
-        <div class="mt-10 flex flex-wrap gap-3">
-            <a href="#proyectos"
-               class="rounded-full bg-accent-400 px-5 py-2.5 text-sm font-semibold text-navy-900 transition hover:bg-accent-300">
-                Ver proyectos
-            </a>
-            <a href="{{ $perfil['github'] }}" target="_blank" rel="noopener"
-               class="rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-slate-200 transition hover:border-accent-400 hover:text-white">
-                GitHub
-            </a>
-            <a href="{{ $perfil['linkedin'] }}" target="_blank" rel="noopener"
-               class="rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-slate-200 transition hover:border-accent-400 hover:text-white">
-                LinkedIn
-            </a>
+        {{-- Firma de la pagina: los productos en produccion, tal como se ven hoy --}}
+        <div class="rise relative pb-14 pl-6 pt-6" style="--d: 400ms">
+            <div class="bob absolute -right-6 top-0 w-[78%]" style="--b: -3s">
+                <x-browser dominio="wildoow.com" imagen="images/proyectos/wildoow.jpg" alt="Página de inicio de Wildoow" alto="h-[300px]" class="rotate-3" />
+            </div>
+            <div class="bob relative mt-30 w-[88%]">
+                <x-browser dominio="conexoo.com" imagen="images/proyectos/conexoo.jpg" alt="Página de inicio de Conexoo" alto="h-[320px]" />
+            </div>
+
+            <div class="bob shadow-window absolute bottom-4.5 left-0 flex flex-col gap-2 rounded-2xl border border-line bg-surface px-4 py-3.5" style="--b: -1.5s">
+                <span class="inline-flex items-center gap-2 text-[13px] font-semibold text-green">
+                    <span class="live-dot h-2 w-2 rounded-full bg-current"></span>
+                    {{ count($destacados) }} plataformas en producción
+                </span>
+                <span class="font-mono text-xs text-muted">{{ collect($destacados)->pluck('nombre')->implode(' · ') }}</span>
+            </div>
         </div>
     </div>
-</section>
-
-<section class="border-b border-slate-200 bg-slate-50">
-    <div class="mx-auto max-w-5xl px-6">
-        <dl class="grid grid-cols-1 divide-y divide-slate-200 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-            @foreach ($metricas as $metrica)
-                <div class="py-8 sm:px-8 sm:first:pl-0 sm:last:pr-0">
-                    <dt class="text-3xl font-bold text-navy-900">{{ $metrica['valor'] }}</dt>
-                    <dd class="mt-1 text-sm text-slate-500">{{ $metrica['etiqueta'] }}</dd>
-                </div>
-            @endforeach
-        </dl>
     </div>
 </section>

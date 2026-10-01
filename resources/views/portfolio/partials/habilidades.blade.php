@@ -1,21 +1,25 @@
-<section id="habilidades" class="border-b border-slate-200 bg-white">
-    <div class="mx-auto max-w-5xl px-6 py-20">
-        <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-accent-600">Habilidades técnicas</h2>
-        <p class="mt-3 text-2xl font-bold text-navy-900 sm:text-3xl">Stack de trabajo</p>
+<section id="habilidades" class="border-t border-line bg-surface">
+    <div class="mx-auto grid max-w-6xl items-start gap-12 px-5 py-24 sm:px-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16 lg:py-28">
+        <div data-reveal>
+            @include('portfolio.partials.encabezado', [
+                'icono' => 'cpu',
+                'etiqueta' => 'Habilidades',
+                'titulo' => 'Stack de trabajo',
+                'texto' => 'Lo que uso a diario. Las tecnologías en oscuro son mi especialidad.',
+            ])
+        </div>
 
-        <div class="mt-12 grid gap-6 sm:grid-cols-2">
+        <dl class="border-b border-line">
             @foreach ($habilidades as $categoria => $tecnologias)
-                <div class="rounded-xl border border-slate-200 bg-slate-50 p-6">
-                    <h3 class="text-xs font-bold uppercase tracking-[0.15em] text-slate-500">{{ $categoria }}</h3>
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        @foreach ($tecnologias as $tecnologia)
-                            <span class="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700">
-                                {{ $tecnologia }}
-                            </span>
+                <div data-reveal class="grid gap-3 border-t border-line py-5.5 sm:grid-cols-[220px_minmax(0,1fr)] sm:gap-6" style="--d: {{ $loop->index * 70 }}ms">
+                    <dt class="pt-1.5 font-mono text-xs uppercase tracking-[0.12em] text-muted">{{ $categoria }}</dt>
+                    <dd class="flex flex-wrap gap-2">
+                        @foreach ($tecnologias as [$label, $logo, $especialidad])
+                            <x-tech :label="$label" :logo="$logo" :especialidad="$especialidad" />
                         @endforeach
-                    </div>
+                    </dd>
                 </div>
             @endforeach
-        </div>
+        </dl>
     </div>
 </section>

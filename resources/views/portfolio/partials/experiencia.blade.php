@@ -1,36 +1,43 @@
-<section id="experiencia" class="border-b border-slate-200 bg-white">
-    <div class="mx-auto max-w-5xl px-6 py-20">
-        <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-accent-600">Experiencia profesional</h2>
-        <p class="mt-3 text-2xl font-bold text-navy-900 sm:text-3xl">Dónde he trabajado</p>
+<section id="experiencia" class="border-t border-line">
+    <div class="mx-auto grid max-w-6xl items-start gap-12 px-5 py-24 sm:px-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16 lg:py-28">
+        <div data-reveal class="flex flex-col gap-5 lg:sticky lg:top-28">
+            @include('portfolio.partials.encabezado', ['icono' => 'briefcase-business', 'etiqueta' => 'Experiencia', 'titulo' => 'Dónde he trabajado'])
+            <p class="leading-relaxed text-muted">{{ $perfil['sobre_mi'] }}</p>
+        </div>
 
-        <div class="mt-12 space-y-12">
+        <div class="flex flex-col gap-10">
             @foreach ($experiencia as $puesto)
-                <article class="relative border-l-2 border-slate-200 pl-6 md:pl-8">
-                    <span class="absolute -left-[7px] top-2 h-3 w-3 rounded-full border-2 border-white bg-accent-500"></span>
-
-                    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                        <h3 class="text-xl font-bold text-navy-900">{{ $puesto['puesto'] }}</h3>
-                        <span class="text-sm font-semibold text-accent-600">{{ $puesto['empresa'] }}</span>
+                <article data-reveal class="flex flex-col gap-7 rounded-3xl border border-line bg-surface p-7 sm:p-9" style="--d: 150ms">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <span class="flex h-14 w-14 items-center justify-center rounded-[14px] bg-[#2b3fe0] text-white">
+                                <x-icon name="code-xml" :size="26" />
+                            </span>
+                            <div>
+                                <h3 class="font-display text-2xl font-bold tracking-[-0.02em] text-ink">{{ $puesto['puesto'] }}</h3>
+                                <p class="mt-1 font-mono text-[13px] font-medium text-accent">{{ $puesto['empresa'] }}</p>
+                            </div>
+                        </div>
+                        <p class="inline-flex items-center gap-2 rounded-[10px] bg-paper px-3 py-2 font-mono text-xs text-muted">
+                            <x-icon name="clock" :size="14" />
+                            {{ $puesto['periodo'] }} · <span data-duracion-desde="{{ $puesto['inicio'] }}">{{ $puesto['duracion'] }}</span>
+                        </p>
                     </div>
 
-                    <p class="mt-1 text-sm text-slate-500">
-                        {{ $puesto['periodo'] }} · {{ $puesto['duracion'] }}
-                    </p>
+                    <p class="leading-relaxed text-muted">{{ $puesto['resumen'] }}</p>
 
-                    <p class="mt-4 max-w-3xl text-slate-600">{{ $puesto['resumen'] }}</p>
-
-                    <div class="mt-8 grid gap-6 md:grid-cols-3">
+                    <div class="grid gap-7 border-t border-line pt-7 md:grid-cols-3">
                         @foreach ($puesto['bloques'] as $bloque)
-                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-5">
-                                <h4 class="text-xs font-bold uppercase tracking-[0.15em] text-slate-500">
-                                    {{ $bloque['titulo'] }}
-                                </h4>
-                                <ul class="mt-4 space-y-3 text-sm leading-relaxed text-slate-600">
+                            <div class="flex flex-col gap-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="flex h-9 w-9 items-center justify-center rounded-[10px] bg-paper text-accent">
+                                        <x-icon :name="$bloque['icono']" :size="18" />
+                                    </span>
+                                    <h4 class="font-mono text-xs uppercase tracking-[0.12em] text-ink">{{ $bloque['titulo'] }}</h4>
+                                </div>
+                                <ul class="flex flex-col gap-2.5 text-sm leading-relaxed text-muted">
                                     @foreach ($bloque['puntos'] as $punto)
-                                        <li class="flex gap-2.5">
-                                            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-500"></span>
-                                            <span>{{ $punto }}</span>
-                                        </li>
+                                        <li class="border-l-2 border-line pl-3">{{ $punto }}</li>
                                     @endforeach
                                 </ul>
                             </div>

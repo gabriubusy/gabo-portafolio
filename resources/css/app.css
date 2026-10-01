@@ -3,40 +3,214 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+@custom-variant dark (&:where([data-theme="oscuro"], [data-theme="oscuro"] *));
 
-    /* Azul marino del CV */
-    --color-navy-900: #0d1b2c;
-    --color-navy-800: #16263c;
-    --color-navy-700: #26364f;
-    --color-accent-300: #5eead4;
-    --color-accent-400: #2dd4bf;
-    --color-accent-500: #14b8a6;
-    --color-accent-600: #0f9488;
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Bricolage Grotesque', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Los colores apuntan a variables: el tema solo cambia sus valores */
+@theme inline {
+    --color-paper: var(--paper);
+    --color-surface: var(--surface);
+    --color-ink: var(--ink);
+    --color-muted: var(--muted);
+    --color-line: var(--line);
+    --color-chrome: var(--chrome);
+    --color-band: var(--band);
+    --color-accent: var(--accent);
+    --color-green: var(--green);
+    --color-green-soft: var(--green-soft);
+    --color-conexoo: var(--conexoo);
+    --color-conexoo-soft: var(--conexoo-soft);
+    --color-wildoow: var(--wildoow);
+    --color-wildoow-soft: var(--wildoow-soft);
+    --color-suince: var(--suince);
+    --color-suince-soft: var(--suince-soft);
+    --color-ianecta: var(--ianecta);
+    --color-ianecta-soft: var(--ianecta-soft);
+}
+
+:root {
+    --paper: #f4f6fb;
+    --surface: #ffffff;
+    --ink: #10162b;
+    --muted: #545d78;
+    --line: #dce1ec;
+    --chrome: #eef1f7;
+    --band: #10162b;
+    --accent: #2b4eff;
+    --green: #16794c;
+    --green-soft: #e6f4ee;
+    --conexoo: #c2410c;
+    --conexoo-soft: #fff1e8;
+    --wildoow: #6d2fb5;
+    --wildoow-soft: #f3ecfb;
+    --suince: #966007;
+    --suince-soft: #fdf6e3;
+    --ianecta: #047857;
+    --ianecta-soft: #e6f6ef;
+    color-scheme: light;
+}
+
+[data-theme="oscuro"] {
+    --paper: #0b1020;
+    --surface: #121931;
+    --ink: #e8ecf7;
+    --muted: #9aa3bd;
+    --line: #232c47;
+    --chrome: #1a2240;
+    --band: #05080f;
+    --accent: #8ea2ff;
+    --green: #4ade95;
+    --green-soft: #10291e;
+    --conexoo: #fb8a4c;
+    --conexoo-soft: #24170f;
+    --wildoow: #b58cf0;
+    --wildoow-soft: #1d1730;
+    --suince: #f5c451;
+    --suince-soft: #211b0c;
+    --ianecta: #34d399;
+    --ianecta-soft: #0d2620;
+    color-scheme: dark;
 }
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
 }
 
 body {
-    background-color: #ffffff;
+    background-color: var(--paper);
+    color: var(--ink);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Subrayado animado de la navegacion */
-.nav-link::after {
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* Punto "en produccion" que late */
+.live-dot {
+    position: relative;
+}
+
+.live-dot::after {
     content: '';
     position: absolute;
-    left: 0;
-    bottom: -4px;
-    height: 1px;
-    width: 0;
-    background-color: var(--color-accent-400);
-    transition: width 0.25s ease;
+    inset: 0;
+    border-radius: 9999px;
+    background: currentColor;
+    animation: live-pulse 2s ease-out infinite;
 }
 
-.nav-link:hover::after {
-    width: 100%;
+@keyframes live-pulse {
+    from { transform: scale(1); opacity: 0.55; }
+    to { transform: scale(2.8); opacity: 0; }
+}
+
+/* Entrada escalonada del hero */
+.rise {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    animation-delay: var(--d, 0ms);
+}
+
+@keyframes rise {
+    to { opacity: 1; transform: none; }
+}
+
+.shadow-window {
+    box-shadow: 0 30px 60px -30px rgba(16, 22, 43, 0.45), 0 8px 20px -12px rgba(16, 22, 43, 0.2);
+}
+
+/* Aparicion al hacer scroll: solo con JS, para no ocultar nada si falla */
+.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(6px);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+        transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+        filter 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--d, 0ms);
+}
+
+.js [data-reveal='izquierda'] { transform: translateX(-48px); }
+.js [data-reveal='derecha'] { transform: translateX(48px); }
+.js [data-reveal='zoom'] { transform: scale(0.94); }
+
+.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+}
+
+/* Manchas de color que flotan detras del contenido */
+.orb {
+    position: absolute;
+    z-index: 0;
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.28;
+    pointer-events: none;
+    animation: orb-float var(--t, 22s) ease-in-out infinite alternate;
+}
+
+[data-theme='oscuro'] .orb { opacity: 0.2; }
+
+@keyframes orb-float {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(var(--x, 60px), var(--y, -40px)) scale(1.12); }
+    100% { transform: translate(calc(var(--x, 60px) * -0.6), calc(var(--y, -40px) * -0.8)) scale(0.95); }
+}
+
+/* Flotacion suave de las ventanas de la portada */
+.bob {
+    animation: bob 7s ease-in-out infinite;
+    animation-delay: var(--b, 0s);
+}
+
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Tarjetas que se elevan al pasar el raton */
+.lift {
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -28px rgba(16, 22, 43, 0.45);
+}
+
+/* La captura se acerca un poco al pasar el raton */
+.zoom-img img {
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.zoom-img:hover img {
+    transform: scale(1.04);
+}
+
+/* Sombra de la barra al hacer scroll */
+.nav-scrolled {
+    box-shadow: 0 10px 30px -18px rgba(16, 22, 43, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    body { transition: none; }
+    .rise { opacity: 1; transform: none; animation: none; }
+    .live-dot::after { animation: none; }
+    .js [data-reveal] { opacity: 1; transform: none; filter: none; transition: none; }
+    .orb, .bob { animation: none; }
+    .lift:hover, .zoom-img:hover img { transform: none; }
 }
