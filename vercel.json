@@ -1,0 +1,14 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": null,
+    "installCommand": "echo \"dist/ se genera en local con composer export\"",
+    "buildCommand": "echo \"sin build: se sirve dist/\"",
+    "outputDirectory": "dist",
+    "cleanUrls": true,
+    "headers": [
+        {
+            "source": "/build/assets/(.*)",
+            "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+        }
+    ]
+}
